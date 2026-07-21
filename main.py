@@ -1,14 +1,25 @@
-from stats import count_words, count_characters
+from stats import count_words, count_characters, chars_dict_to_sorted_list
 
 def get_book_text(filepath):
     with open(filepath) as f:
         return f.read()
 
+def print_report(filepath, num_words, sorted_list):
+    print(f"--- Begin report of {filepath} ---")
+    print(f"Found {num_words} total words")
+    for char, count in sorted_list:
+        if not char.isalpha():
+            continue
+
+        print(f"{char}: {count}")
+    print("--- End report ---")
+
 def main():
-    book = get_book_text("books/frankenstein.txt")
+    filepath = "books/frankenstein.txt"
+    book = get_book_text(filepath)
     num_words = count_words(book)
     char_count = count_characters(book)
-    print(f'Found {num_words} total words')
-    print(char_count)
+    sorted_list = chars_dict_to_sorted_list(char_count)
+    print_report(filepath, num_words, sorted_list)
     
 main()  
